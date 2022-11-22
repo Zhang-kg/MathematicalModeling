@@ -36,7 +36,7 @@ validate_rate = 0.1
 test_rate = 0.1
 x = np.linspace(0, 4, N)
 y_withoutNoise = Gauss(x, 0, 1) + Gauss(x, 1.5, 1)
-y = y_withoutNoise + h * np.random.normal(size=y_withoutNoise.shape)
+y = y_withoutNoise + np.random.normal(scale=np.sqrt(h), size=y_withoutNoise.shape)
 
 index = [i for i in range(len(y))]
 np.random.shuffle(index)
@@ -61,7 +61,7 @@ print(len(x_validate))
 print(len(x_test))
 
 
-popt = curve_fit(my_func, x_train, y_train, maxfev=500000, p0=[1, 10000.0, 1])[0]
+popt = curve_fit(my_func, x_train, y_train, maxfev=500000, p0=np.random.normal(size=3))[0]
 print("参数为" + str(popt))
 y_train_pred = my_func(x_train, *popt)
 print("训练集上的RMSE = " + str(RMSE(y_train_pred, y_train)))

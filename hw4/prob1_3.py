@@ -25,7 +25,7 @@ def my_func(x, *arguments):
     for i in range(K):
         for j in range(M):
             y_pred += arguments[i * M + j] * np.power(x, j) * \
-                      Gauss(x, arguments[K * M + i], arguments[K * M + M + i])
+                      Gauss(x, arguments[K * M + i], arguments[K * M + K + i])
     return y_pred
 
 
@@ -45,7 +45,7 @@ validate_rate = 0.1
 test_rate = 0.1
 x = np.linspace(0, 4, N)
 y_withoutNoise = Gauss(x, 0, 1) + Gauss(x, 1.5, 1)
-y = y_withoutNoise + h * np.random.normal(size=y_withoutNoise.shape)
+y = y_withoutNoise + np.random.normal(scale=np.sqrt(h), size=y_withoutNoise.shape)
 
 index = [i for i in range(len(y))]
 np.random.shuffle(index)

@@ -46,7 +46,7 @@ for line in lines:
 h_Matrix = cp.Variable((len(x), S), boolean=True)
 thetas = cp.Variable(S + 1)
 obj = cp.Maximize(w * (cp.sum(thetas[0:S])) / S + (1 - w) * thetas[S])
-constraints = []
+constraints = [thetas[S] >= 0.70]
 
 # theta 的约束
 for s in range(S):
@@ -84,6 +84,8 @@ prob = cp.Problem(obj, constraints)
 prob.solve(reoptimize=True, solver="GUROBI", verbose=True)
 
 print(h_Matrix.value)
+print(thetas.value)
+print(obj.value)
 
 fig = plt.figure()
 ax1 = plt.axes(projection='3d')

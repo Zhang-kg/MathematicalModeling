@@ -26,13 +26,13 @@ def RMSE(y_pred, y_label):
 
 
 N = 1000
-h = 0.2
+h = 0.0002
 train_rate = 0.8
 validate_rate = 0.1
 test_rate = 0.1
 x = np.linspace(0, 4, N)
 y_withoutNoise = Gauss(x, 0, 1) + Gauss(x, 1.5, 1)
-y = y_withoutNoise + h * np.random.normal(size=y_withoutNoise.shape)
+y = y_withoutNoise + np.random.normal(scale=np.sqrt(h), size=y_withoutNoise.shape)
 
 index = [i for i in range(len(y))]
 np.random.shuffle(index)
@@ -59,6 +59,8 @@ print(len(x_test))
 
 popt = curve_fit(my_func, x_train, y_train, maxfev=500000)[0]
 print("参数为" + str(popt))
+# x_train = np.sort(x_train)
+# x_test = np.sort(x_test)
 y_train_pred = my_func(x_train, popt[0], popt[1], popt[2],
                           popt[3], popt[4], popt[5])
 print("训练集上的RMSE = " + str(RMSE(y_train_pred, y_train)))
@@ -74,15 +76,15 @@ plt.subplot(1, 2, 1)
 plt.plot(x, y_withoutNoise, linestyle='--', c='gold')
 plt.scatter(x, y)
 plt.scatter(x_train, y_train_pred, c='r')
-# plt.scatter(x_test, y_test_pred, c='r')
+# plt.plot(x_train, y_train_pred, c='r')
 plt.title("训练集")
 
 plt.subplot(1, 2, 2)
 plt.plot(x, y_withoutNoise, linestyle='--', c='gold')
 plt.scatter(x, y)
-# plt.scatter(x_train, y_train_pred, c='r')
 plt.scatter(x_test, y_test_pred, c='r')
+# plt.plot(x_test, y_test_pred, c='r')
 plt.title("测试集")
-# plt.plot(x_train, y_train_pred)
 
+# print(x_train)
 plt.show()

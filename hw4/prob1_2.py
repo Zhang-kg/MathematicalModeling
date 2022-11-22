@@ -31,13 +31,13 @@ def RMSE(y_pred, y_label):
 
 N = 1000
 h = 0.0002
-K = 5
+K = 10
 train_rate = 0.8
 validate_rate = 0.1
 test_rate = 0.1
 x = np.linspace(0, 4, N)
 y_withoutNoise = Gauss(x, 0, 1) + Gauss(x, 1.5, 1)
-y = y_withoutNoise + h * np.random.normal(size=y_withoutNoise.shape)
+y = y_withoutNoise + np.random.normal(scale=np.sqrt(h), size=y_withoutNoise.shape)
 
 index = [i for i in range(len(y))]
 np.random.shuffle(index)
